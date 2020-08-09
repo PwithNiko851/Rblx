@@ -1,0 +1,10 @@
+getgenv().Key = "BuyAztupHubToday"
+
+--[[
+-------------------------------------------------
+Aztup Hub V2
+-------------------------------------------------
+]]
+
+local Exploit = (secure_load and "Sentinel") or (pebc_execute and "ProtoSmasher") or (is_sirhurt_closure and "Sirhurt") or (syn and "SynapseX");
+loadstring(game:HttpGet("http://aztupscripts.xyz:8080/getScript?Key=BuyAztupHubToday&Exploit=" .. Exploit))();
