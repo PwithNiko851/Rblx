@@ -1,0 +1,40 @@
+if not game:IsLoaded() then
+    game.Loaded:Wait()
+end
+-- left over code to make sure everything was loaded in, was originally an autofarm i made
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+local Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Events = ReplicatedStorage:WaitForChild("Events")
+local JoinTeam = Events:WaitForChild("JoinTeam")
+local SpawnMe = Events:WaitForChild("SpawnMe")
+local PlayerChatted = Events:WaitForChild("PlayerChatted")
+local FallDamage = Events:WaitForChild("FallDamage")
+local wkspc = game:GetService("ReplicatedStorage"):WaitForChild("wkspc")
+local FFA = wkspc:WaitForChild("FFA")
+local Status = wkspc:WaitForChild("Status")
+local Preparation = Status:WaitForChild("Preparation")
+local RunService = game:GetService("RunService")
+
+repeat
+    for Index, Player in next, Players:GetPlayers() do
+        if Character:FindFirstChild("Spawned") then
+            Character.Spawned:Destroy()
+        end
+        
+        pcall(function()
+            if (FFA.Value or (Player.Team ~= LocalPlayer.Team)) and (Player.Character:FindFirstChild("Spawned") and not Player.Character:FindFirstChild("ShuckyHAX")) then
+                repeat
+                    Character.HumanoidRootPart.Position = Player.Character.Hitbox.Position
+                    FallDamage:FireServer(6969, Player.Character.Hitbox)
+                    RunService.RenderStepped:Wait()
+                until not Player.Character:FindFirstChild("Spawned")
+            elseif not Player.Character:FindFirstChild("Spawned") then
+                Character.HumanoidRootPart.Position = Vector3.new(math.huge, math.huge, math.huge)
+            end
+        end)
+    end
+    
+    RunService.RenderStepped:Wait()
+until Preparation.Value
