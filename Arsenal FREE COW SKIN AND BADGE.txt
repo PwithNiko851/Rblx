@@ -1,6 +1,6 @@
 --[[
             Obfuscated with uwubrew
-            uwubrew created by tostring
+            uwubrew created by niko / lucky niko #9380
             UwU
 
 
