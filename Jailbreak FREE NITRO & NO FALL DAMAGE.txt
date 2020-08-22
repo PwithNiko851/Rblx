@@ -1,0 +1,25 @@
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local UpdatePrePhysics = require(ReplicatedStorage.Module.AlexChassis).UpdatePrePhysics
+local Ragdoll = require(ReplicatedStorage.Module.AlexRagdoll).Ragdoll
+local Player = game:GetService'Players'.LocalPlayer
+local Mouse = Player:GetMouse()
+
+Mouse.KeyDown:Connect(function(Key)
+if Key:lower()=='z' then
+require(ReplicatedStorage.Module.AlexChassis).UpdatePrePhysics = function(A, B)
+ A.Nitro = true
+ return UpdatePrePhysics(A, B)
+end
+end
+end)
+
+Mouse.KeyUp:Connect(function(Key)
+if Key:lower()=='z' then
+require(ReplicatedStorage.Module.AlexChassis).UpdatePrePhysics = function(A, B)
+ A.Nitro = false
+ return UpdatePrePhysics(A, B)
+end
+end
+end)
+
+require(ReplicatedStorage.Module.AlexRagdoll).Ragdoll = nil
