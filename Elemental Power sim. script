@@ -1,0 +1,17 @@
+  Made by : Niko ,  Join discord server for more roblox free scripts : https://discord.gg/RC9NFyh
+  
+  Script : 
+
+local Event = game.ReplicatedStorage.ClientEvents.CodeEvent
+local Event2 = game.Players.LocalPlayer.Gamepasses
+local Event3 = game.Players.LocalPlayer.DevProducts
+Event:FireServer("GROUPONLY")
+Event:FireServer("ANIME")
+Event:FireServer("THANKS4SUPPORT")
+Event:FireServer("NEXTCODE@14K")
+Event:FireServer("URBANIZE")
+Event2.Boombox.Value = true
+Event2.DoubleExp.Value = true
+Event2.DoubleCoins.Value = true
+Event3.haveDoubleEXP.Value = true
+Event3.DoubleEXPTime.Value = math.huge
