@@ -1,0 +1,15 @@
+while wait() do
+   local args = {
+   [1] = "Input",
+   [2] = "Action",
+   [3] = true
+   }
+
+   game:GetService("ReplicatedStorage").RemoteEvent:FireServer(unpack(args))
+   
+   local args = {
+       [1] = "SetPlayerMinigameResult",
+       [2] = true
+   }
+   game:GetService("ReplicatedStorage").RemoteEvent:FireServer(unpack(args))
+end    
