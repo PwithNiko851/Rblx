@@ -1,0 +1,409 @@
+-----------HTML----------- : 
+
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>JavaScript Web Terminal</title>
+  <link rel="stylesheet" href="style.css">
+ 
+</head>
+<body>
+ 
+<div class="gradientCont">
+		<div class="mainCont">
+		<h2>JS Web Terminal</h2>
+		<h3>Talk With Me, I'm Your Personal Assistant.</h3>
+		<div class="terminalCont">
+		<div id="terminalReslutsCont">
+		</div>
+		<form>
+		<input id="terminalTextInput" type="text" placeholder="Try typing hi or help..." autocomplete="off">
+		</form>
+		</div>
+		</div>
+	</div>
+ 
+  <script  src="function.js"></script>
+ 
+</body>
+</html>
+
+
+
+-----------CSS-----------
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+ 
+body{
+  font-family: 'Roboto','Helvetica Neue', 'Lucida Grande', sans-serif;
+}
+ 
+body, h1,h2,h3, p{
+	margin:0;
+	padding:0;
+}
+ 
+.gradientCont{
+  background: linear-gradient(to right, #ff416c, #ff4b2b); 
+	width:100%;
+	height: 300px;
+}
+ 
+.mainCont{
+	width:1000px;
+	margin: 0 auto;
+}
+ 
+.mainCont h2{
+	display: inline-block;
+	width: 100%;
+	text-align: center;
+	font-weight: 300;
+	font-size: 48px;
+	margin: 60px 0 0 0;
+	color: white;
+  opacity: 0;
+ 
+  animation: fadeInAnimation 1s ease-in-out 0s forwards;
+}
+ 
+.mainCont h3{
+	text-align: center;
+	font-weight: 400;
+	font-size: 18px;
+	color: rgba(255,255,255,0.75);
+  margin: 0 0 60px 0;
+  opacity: 0;
+ 
+  animation: fadeInAnimation 1s ease-in-out 0.5s forwards;
+}
+ 
+.terminalCont{
+	background: black;
+	width: 100%;
+	border-radius: 4px;
+  padding:12px 0 0 0;
+  margin-top: -20px;
+  font-family: 'Roboto Mono', monospace;
+  opacity: 0;
+ 
+  animation:
+    slideDownAnimation 1s ease-in-out 1s forwards,
+    fadeInAnimation 0.8s ease-in-out 1s forwards;
+}
+ 
+.userEnteredText{
+  color: rgba(255,255,255,0.5);
+  margin: 0;
+  padding: 0;
+  display: inline-block;
+}
+ 
+#terminalReslutsCont{
+	width:100%;
+	height: 400px;
+	padding: 12px;
+	overflow-y: auto;
+	resize: none;
+	border: none;
+	font-size: 14px;
+  line-height: 28px;
+	display: block;
+	color: rgba(255,255,255,0.9);
+}
+ 
+ 
+#terminalReslutsCont a{
+  color: rgba(255,255,255,0.9);
+  text-decoration: none;
+}
+ 
+#terminalReslutsCont a:hover{
+  text-decoration: underline;
+}
+ 
+#terminalTextInput{
+	background: black;
+	display: block;
+	border: none;
+	border-top: 1px solid rgba(255,255,255,0.2);
+	border-radius: 0 0 4px 4px;
+	width: 100%;
+	color: white;
+	padding: 18px;
+	font-size: 14px;
+  outline: none;
+  font-family: 'Roboto Mono', monospace;
+}
+ 
+@-webkit-keyframes fadeInAnimation {
+  0%   { opacity: 0; }
+  100% { opacity: 1; }
+}
+@-moz-keyframes fadeInAnimation {
+  0%   { opacity: 0; }
+  100% { opacity: 1; }
+}
+@-o-keyframes fadeInAnimation {
+  0%   { opacity: 0; }
+  100% { opacity: 1; }
+}
+@keyframes fadeInAnimation {
+  0%   { opacity: 0; }
+  100% { opacity: 1; }
+}
+ 
+@-webkit-keyframes slideDownAnimation {
+  0%   { margin-top: -20px;}
+  100% { margin-top: 0;}
+}
+@-moz-keyframes slideDownAnimation {
+  0%   { margin-top: -20px;}
+  100% { margin-top: 0;}
+}
+@-o-keyframes slideDownAnimation {
+  0%   { margin-top: -20px;}
+  100% { margin-top: 0;}
+}
+@keyframes slideDownAnimation {
+  0%   { margin-top: -20px;}
+  100% { margin-top: 0;}
+}
+ 
+@media screen and (max-width: 1000px){
+  .gradientCont{
+    height: 220px;
+  }
+  .mainCont{
+    width: 100%;
+    padding: 0 12px;
+  }
+  .mainCont h2{
+    font-size: 32px;
+    margin: 40px 0 0 0;
+  }
+  .mainCont h3{
+    font-size: 16px;
+    margin: 0 0 40px 0;
+  }
+  #terminalReslutsCont{
+    height: 100px;
+  }
+ 
+}
+
+
+
+
+-----------JAVASCRIPT-----------
+document.addEventListener('DOMContentLoaded', function() {
+ 
+  document.getElementsByTagName('form')[0].onsubmit = function(evt) {
+    evt.preventDefault(); // Preventing the form from submitting
+    checkWord(); // Do your magic and check the entered word/sentence
+    window.scrollTo(0,150);
+  }
+ 
+  // Get the focus to the text input to enter a word right away.
+  document.getElementById('terminalTextInput').focus();
+ 
+  // Getting the text from the input
+  var textInputValue = document.getElementById('terminalTextInput').value.trim();
+ 
+  //Getting the text from the results div
+  var textResultsValue = document.getElementById('terminalReslutsCont').innerHTML;
+ 
+  // Clear text input
+  var clearInput = function(){
+    document.getElementById('terminalTextInput').value = "";
+  }
+ 
+  // Scrtoll to the bottom of the results div
+  var scrollToBottomOfResults = function(){
+    var terminalResultsDiv = document.getElementById('terminalReslutsCont');
+    terminalResultsDiv.scrollTop = terminalResultsDiv.scrollHeight;
+  }
+ 
+  // Scroll to the bottom of the results
+  scrollToBottomOfResults();
+ 
+  // Add text to the results div
+  var addTextToResults = function(textToAdd){
+    document.getElementById('terminalReslutsCont').innerHTML += "<p>" + textToAdd + "</p>";
+    scrollToBottomOfResults();
+  }
+ 
+  // Getting the list of keywords for help & posting it to the screen
+  var postHelpList = function(){
+    // Array of all the help keywords
+    var helpKeyWords = [
+      "- Open + website URL to open it in the browser (ex. open discord.com)",
+      "- Google + keyword to search directly in Google (ex. google web development)",
+      "- YouTube + keyword to search directly in YouTube (ex. ProgrammingWithNiko)",
+      "- Wiki + keyword to search directly in Wikipedia (ex. wiki numbers)",
+      "- 'Time' will display the current time.",
+      "- 'Date' will display the current date.",
+      "- 'tech' will make you expert by watching videos",
+      "* There are more keywords that you have to discover by yourself."
+    ].join('<br>');
+    addTextToResults(helpKeyWords);
+  }
+ 
+  // Getting the time and date and post it depending on what you request for
+  var getTimeAndDate = function(postTimeDay){
+    var timeAndDate = new Date();
+    var timeHours = timeAndDate.getHours();
+    var timeMinutes = timeAndDate.getMinutes();
+    var dateDay = timeAndDate.getDate();
+    console.log(dateDay);
+    var dateMonth = timeAndDate.getMonth() + 1; // Because JS starts counting months from 0
+    var dateYear = timeAndDate.getFullYear(); // Otherwise we'll get the count like 98,99,100,101...etc.
+ 
+    if (timeHours < 10){ // if 1 number display 0 before it.
+      timeHours = "0" + timeHours;
+    }
+ 
+    if (timeMinutes < 10){ // if 1 number display 0 before it.
+      timeMinutes = "0" + timeMinutes;
+    }
+ 
+    var currentTime = timeHours + ":" + timeMinutes;
+    var currentDate = dateDay + "/" + dateMonth + "/" + dateYear;
+ 
+    if (postTimeDay == "time"){
+      addTextToResults(currentTime);
+    }
+    if (postTimeDay == "date"){
+      addTextToResults(currentDate);
+    }
+  }
+ 
+  // Opening links in a new window
+  var openLinkInNewWindow = function(linkToOpen){
+    window.open(linkToOpen, '_blank');
+    clearInput();
+  }
+ 
+  // Having a specific text reply to specific strings
+  var textReplies = function() {
+    switch(textInputValueLowerCase){
+      // replies
+      case "code":
+        clearInput();
+        addTextToResults("Get web elements source code at <a target='_blank' href='</a>");
+        break;
+ 
+      case "founder":
+        clearInput();
+        addTextToResults("Niko and PWN Team are the founders");
+        break;
+ 
+      case "i love you":
+      case "love you":
+      case "love":
+        clearInput();
+        addTextToResults("Aww! Love you too ❤");
+        break;
+ 
+      case "ProgrammingWithNiko":
+      case "PWN":
+      case "programming":
+        clearInput();
+        addTextToResults('Web development examples!');
+        openLinkInNewWindow('https://www.youtube.com/channel/UCjJGyqNHgIOntnY_MDoXVZA?view_as=subscriber');
+        break;
+ 
+      case "hello":
+      case "hi":
+      case "hola":
+        clearInput();
+        addTextToResults("Hello, I am your assistant... I am based on pure JavaScript.");
+        break;
+ 
+      case "what the":
+      case "wtf":
+        clearInput();
+        addTextToResults("F***.");
+        break;
+ 
+      case "shit":
+      case "poop":
+      case "💩":
+        clearInput();
+        addTextToResults("💩");
+        break;
+ 
+ 
+ 
+      // replies 
+ 
+      case "youtube":
+        clearInput();
+        addTextToResults("Type youtube + something to search for.");
+        break;
+ 
+      case "google":
+        clearInput();
+        addTextToResults("Type google + something to search for.");
+        break;
+ 
+        case "wiki":
+        case "wikipedia":
+          clearInput();
+          addTextToResults("Type wiki + something to search for.");
+          break;  
+ 
+      case "time":
+        clearInput();
+        getTimeAndDate("time");
+        break;
+ 
+      case "date":
+        clearInput();
+        getTimeAndDate("date");
+        break;
+ 
+      case "help":
+      case "?":
+        clearInput();
+        postHelpList();
+        break;
+ 
+      default:
+      clearInput();
+      addTextToResults("<p><i>The command " + "<b>" + textInputValue + "</b>" + " was not found. Type <b>Help</b> to see all commands.</i></p>");
+      break;
+    }
+  }
+ 
+// Main function to check the entered text and assign it to the correct function
+  var checkWord = function() {
+    textInputValue = document.getElementById('terminalTextInput').value.trim(); //get the text from the text input to a variable
+    textInputValueLowerCase = textInputValue.toLowerCase(); //get the lower case of the string
+ 
+    if (textInputValue != ""){ //checking if text was entered
+      addTextToResults("<p class='userEnteredText'>> " + textInputValue + "</p>");
+      if (textInputValueLowerCase.substr(0,5) == "open ") { //if the first 5 characters = open + space
+        openLinkInNewWindow('http://' + textInputValueLowerCase.substr(5));
+        addTextToResults("<i>The URL " + "<b>" + textInputValue.substr(5) + "</b>" + " should be opened now.</i>");
+      } else if (textInputValueLowerCase.substr(0,8) == "youtube ") {
+        openLinkInNewWindow('https://www.youtube.com/results?search_query=' + textInputValueLowerCase.substr(8));
+        addTextToResults("<i>I've searched on YouTube for " + "<b>" + textInputValue.substr(8) + "</b>" + " it should be opened now.</i>");
+      } else if (textInputValueLowerCase.substr(0,7) == "google ") {
+        openLinkInNewWindow('https://www.google.com/search?q=' + textInputValueLowerCase.substr(7));
+        addTextToResults("<i>I've searched on Google for " + "<b>" + textInputValue.substr(7) + "</b>" + " it should be opened now.</i>");
+      } else if (textInputValueLowerCase.substr(0,5) == "wiki "){
+        openLinkInNewWindow('https://wikipedia.org/w/index.php?search=' + textInputValueLowerCase.substr(5));
+        addTextToResults("<i>I've searched on Wikipedia for " + "<b>" + textInputValue.substr(5) + "</b>" + " it should be opened now.</i>");
+      } else{
+        textReplies();
+      }
+    }
+  };
+ 
+});
