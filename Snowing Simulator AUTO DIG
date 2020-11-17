@@ -1,0 +1,11 @@
+
+BY : PWN 
+
+
+game.RunService.Stepped:Connect(function()
+Game:GetService("ReplicatedStorage").Remotes.Snow:FireServer(
+{
+Game:GetService("Workspace").Snow.SnowUnit
+}
+)
+end)
