@@ -1,0 +1,17 @@
+
+BY : PWN
+
+
+local num = 3
+local HS = game:GetService('RunService').Heartbeat
+
+while HS:wait() do 
+    for i,v in pairs(game.Players:GetPlayers()) do 
+        if v ~= game.Players.LocalPlayer then 
+            local playerTable = {
+                [1] = game:GetService("Players")[v.Name]
+            }
+            game:GetService("ReplicatedStorage").RemoteEvent.RemoteEvent_Listen:FireServer(num,playerTable)
+        end 
+    end 
+end
